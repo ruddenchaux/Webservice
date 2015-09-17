@@ -14,6 +14,21 @@ abstract class AbstractDriver
     protected $_defaultConfig = [];
 
     /**
+     * @var bool
+     */
+    protected $_logQueries = false;
+
+    /**
+     * @var \DebugKit\Database\Log\DebugLog
+     */
+    protected $_logger;
+
+    /**
+     * @var string
+     */
+    protected $_name;
+
+    /**
      * Constructor.
      *
      * @param array $config Custom configuration.
@@ -30,6 +45,43 @@ abstract class AbstractDriver
      * @return void
      */
     abstract public function initialize();
+
+    /**
+     * @return string
+     */
+    public function configName()
+    {
+        if (!empty($this->_name)) {
+            return $this->_name;
+        }
+
+        return (new \ReflectionClass($this))->getShortName();
+    }
+
+    /**
+     * Whether or not to log queries. This is used by `DebugKit`'s `SqlLogPanel`.
+     *
+     * @return bool
+     */
+    public function logQueries($log = null)
+    {
+        if (is_bool($log)) {
+            $this->_logQueries = $log;
+        }
+
+        return $this->_logQueries;
+    }
+
+    /**
+     * Inject's logger. Right now, it gets it from `DebugKit`'s `SqlLogPanel` but doesn't
+     * do much with it, just wanted to circumvent the errors.
+     *
+     * @param $logger
+     */
+    public function logger($logger)
+    {
+        $this->_logger = $logger;
+    }
 
     /**
      * Proxies the client's methods.
