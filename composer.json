@@ -1,5 +1,5 @@
 {
-    "name": "muffin/webservice",
+    "name": "ruddenchaux/webservice",
     "description": "Extremely simplistic webservices for CakePHP 3",
     "type": "cakephp-plugin",
     "keywords": [
@@ -9,7 +9,7 @@
         "api",
         "orm"
     ],
-    "homepage": "https://github.com/usemuffin/webservice",
+    "homepage": "https://github.com/ruddenchaux/webservice",
     "license": "MIT",
     "authors": [
         {
@@ -34,8 +34,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/usemuffin/webservice/issues",
-        "source": "https://github.com/usemuffin/webservice",
+        "issues": "https://github.com/ruddenchaux/webservice/issues",
+        "source": "https://github.com/ruddenchaux/webservice",
         "irc": "irc://irc.freenode.org/muffin"
     },
     "require": {
