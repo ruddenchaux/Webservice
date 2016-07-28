@@ -45,6 +45,11 @@ abstract class Webservice implements WebserviceInterface
     protected $_nestedResources = [];
 
     /**
+     * @var \Cake\Network\Session
+     */
+    protected $_session;
+
+    /**
      * Construct the webservice
      *
      * @param array $config The config to use
@@ -86,6 +91,17 @@ abstract class Webservice implements WebserviceInterface
         $this->_driver = $driver;
 
         return $this;
+    }
+
+    /**
+     * @param null $session
+     * @return \Cake\Network\Session|null
+     */
+    public function session(\Cake\Network\Session $session = null) {
+        if($session === null) {
+            return $this->_session;
+        }
+        return $this->_session = $session;
     }
 
     /**
@@ -314,6 +330,12 @@ abstract class Webservice implements WebserviceInterface
     protected function _transformResults(Endpoint $endpoint, array $results)
     {
         $resources = [];
+        if(!count($results)) {
+            return [];
+        }
+        if(!array_key_exists(0,$results)) {
+            $results = [$results];
+        }
         foreach ($results as $result) {
             $resources[] = $this->_transformResource($endpoint, $result);
         }

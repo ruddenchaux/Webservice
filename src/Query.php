@@ -66,8 +66,15 @@ class Query implements QueryInterface, IteratorAggregate
     protected $_parts = [
         'order' => [],
         'set' => [],
-        'where' => []
+        'where' => [],
+        'association' => '',
+        'contain' => ''
     ];
+
+    /**
+     * @var
+     */
+    protected $_model;
 
     /**
      * Instance of the webservice to use
@@ -103,6 +110,23 @@ class Query implements QueryInterface, IteratorAggregate
     public function create()
     {
         $this->action(self::ACTION_CREATE);
+
+        return $this;
+    }
+
+    public function createAssociation($model) {
+        $this->association($model);
+        $this->action(self::ACTION_CREATE);
+
+        return $this;
+    }
+
+    public function model($model = null) {
+        if ($model === null) {
+            return $this->_model;
+        }
+
+        $this->_model = $model;
 
         return $this;
     }
@@ -479,6 +503,28 @@ class Query implements QueryInterface, IteratorAggregate
     public function execute()
     {
         return $this->_execute();
+    }
+
+    public function association($model = null)
+    {
+        if ($model === null) {
+            return $this->clause('association');
+        }
+
+        $this->_parts['association'] = $model;
+
+        return $this;
+    }
+
+    public function contain($model = NULL)
+    {
+        if ($model === null) {
+            return $this->clause('contain');
+        }
+
+        $this->_parts['contain'] = $model;
+
+        return $this;
     }
 
     /**

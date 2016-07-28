@@ -68,7 +68,6 @@ class EndpointRegistry
 
                 $connectionName = Inflector::underscore(end($pluginParts));
             }
-
             $options['connection'] = ConnectionManager::get($connectionName);
         }
 
