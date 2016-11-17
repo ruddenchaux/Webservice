@@ -77,6 +77,11 @@ class Query implements QueryInterface, IteratorAggregate
     protected $_model;
 
     /**
+     * @var
+     */
+    protected $_remoteMethod;
+
+    /**
      * Instance of the webservice to use
      *
      * @var \Muffin\Webservice\Webservice\WebserviceInterface
@@ -127,6 +132,16 @@ class Query implements QueryInterface, IteratorAggregate
         }
 
         $this->_model = $model;
+
+        return $this;
+    }
+
+    public function remoteMethod($remoteMethod = null) {
+        if ($remoteMethod === null) {
+            return $this->_remoteMethod;
+        }
+
+        $this->_remoteMethod = $remoteMethod;
 
         return $this;
     }
@@ -294,7 +309,7 @@ class Query implements QueryInterface, IteratorAggregate
     public function action($action = null)
     {
         if ($action === null) {
-            return $this->clause('action');
+            return $this->clause('action'); 
         }
 
         $this->_parts['action'] = $action;
